@@ -154,3 +154,82 @@ if fdvs == "":
 
 print("\nLa segunda derivada de tu funcion es:\n")
 print(f"f''(x)= {fdvs}\n")
+
+
+# ----graficas----
+#Graficamos los puntos y trazamos la funcion
+
+#Convierte la funcion a una forma mas agil de uso
+f_numerica = lambdify(v, expr, modules=['numpy'])
+
+#Guardamos todos los puntos criticos juntos
+puntos_criticos_x = xmaximos + xminimos
+
+if len(puntos_criticos_x) > 0:
+    # Convertimos a float para que no salgan numeros raros y para matplot
+    vals_float = [float(sympify(val).evalf()) for val in puntos_criticos_x]
+    min_x = min(vals_float)
+    max_x = max(vals_float)
+    
+    # Agregamos un margen del 30% a los lados
+    margen = (max_x - min_x) * 0.3
+    if margen == 0: margen = 2
+    
+    lim_izq = min_x - margen
+    lim_der = max_x + margen
+
+# Cambiamos el formato de cadena para agilizar la obtencion de datos
+f_numerica = lambdify(v, expr, modules=['numpy'])
+x_vals = np.linspace(lim_izq, lim_der, 500)
+y_vals = f_numerica(x_vals)
+
+# Ancho y Alto de la ventana de grafica
+plt.figure(figsize=(10, 7))
+
+# Esta es la funcion
+plt.plot(x_vals, y_vals, label=f'f({v})', color='royalblue', linewidth=2)
+
+# Puntos maximos en morado
+if len(xmaximos) > 0:
+    # Dibuja los puntos
+    plt.scatter(xmaximos, ymaximos, color='purple', s=100, zorder=5, label='Máximos')
+    
+    # Coloca la coordenada a cada maximo
+    for x_sym, y_sym in zip(xmaximos, ymaximos):
+        # Convierte a decimal
+        x_val = float(sympify(x_sym).evalf())
+        y_val = float(sympify(y_sym).evalf())
+        #Coloca maximo 2 decimales para no saturar la grafica
+        texto = f"({x_val:.2f}, {y_val:.2f})"
+        
+        # Mueve las coordenadas un poco arriba para que sean visibles
+        plt.annotate(texto, xy=(x_val, y_val), xytext=(0, 10), 
+                     textcoords="offset points", ha='center', 
+                     color='darkred', fontweight='bold')
+
+# Puntos minimos en verde
+if len(xminimos) > 0:
+    # Dibuja los puntos
+    plt.scatter(xminimos, yminimos, color='green', s=100, zorder=5, label='Mínimos')
+    
+    # Coloca coordenadas a cada mínimo
+    for x_sym, y_sym in zip(xminimos, yminimos):
+        # Lo mismo que en maximos
+        x_val = float(sympify(x_sym).evalf())
+        y_val = float(sympify(y_sym).evalf())
+        texto = f"({x_val:.2f}, {y_val:.2f})"
+        
+        # Ahora mueve las coordenadas hacia abajo para que sean visibles
+        plt.annotate(texto, xy=(x_val, y_val), xytext=(0, -20), 
+                     textcoords="offset points", ha='center', 
+                     color='darkgreen', fontweight='bold')
+
+# Imprime la grafica ya generada con formato
+plt.axhline(0, color='black', linewidth=1)
+plt.axvline(0, color='black', linewidth=1)
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.title(f"Gráfica de {fin}")
+plt.legend()
+plt.tight_layout()
+
+plt.show()
