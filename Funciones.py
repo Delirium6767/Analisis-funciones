@@ -4,8 +4,8 @@ import re
 import numpy as np
 
 print("------Variacion de Funciones-----")
-print("Ingresa tu funcion\n")
-print("Coloca los caracteres de mayor orden a menor\n")
+print("\nIngresa tu funcion")
+print("Coloca los caracteres de mayor orden a menor (Ej 3x^2 - 2x + 6) \n")
 fin = input("f(x)=")
 fi = fin.replace("^", "**")
 # Regex para poner * entre numero y letra
