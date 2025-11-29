@@ -188,29 +188,29 @@ print(xminimos)
 ymaximos = []
 yminimos = []
 
-#Evaluamos en los puntos maximos
+#Evaluamos en puntos maximos
 for valor_x in xmaximos:
-    y = expr.subs(v, valor_x)
+    y = float(expr.subs(v, valor_x).evalf(4)) 
     ymaximos.append(y)
 
-#Evaluamos en los puntos minimos
+#Evaluamos en puntos minimos
 for valor_x in xminimos:
-    y = expr.subs(v, valor_x)
+    y = float(expr.subs(v, valor_x).evalf(4))
     yminimos.append(y)
-
+    
 print("Evaluamos los puntos maximos y minimos en la funcion original\n")
 
 if len(xmaximos) > 0:
     print("\nLos puntos maximos son:\n")
     for x, y in zip(xmaximos, ymaximos):
-        print(f"Coordenada: ({x.evalf(2)}, {y.evalf(2)})")
+        print(f"Coordenada: ({x.evalf(2)}, {y})")
 else:
     print("\nNo se encontraron puntos máximos.")
 
 if len(xminimos) > 0:
     print("\nLos puntos minimos son:\n")
     for x, y in zip(xminimos, yminimos):
-        print(f"Coordenada: ({x.evalf(2)}, {y.evalf(2)})")
+        print(f"Coordenada: ({x.evalf(2)}, {y})")
 else:
 
     print("\nNo se encontraron puntos mínimos.")
