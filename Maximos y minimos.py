@@ -1,5 +1,3 @@
-#Johan (Calculo de maximos y minimos)
-
 #Colocamos formato para que pueda operar python
 #Cambia los ^ por ** que simblizan la potencia para la primer derivada
 fdvc = fdvs.replace("^", "**")
@@ -57,4 +55,5 @@ if len(xminimos) > 0:
     for x, y in zip(xminimos, yminimos):
         print(f"Coordenada: ({x.evalf(2)}, {y.evalf(2)})")
 else:
+
     print("\nNo se encontraron puntos mínimos.")
